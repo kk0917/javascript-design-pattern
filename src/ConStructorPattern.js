@@ -80,6 +80,11 @@ function Car(model, year, miles) {
     return this.model + " has done " + this.miles + "miles";
   }
 }
+// How to use
+var civic  = new Car("Honda Civic", 2009, 20000)
+var mondeo = new Car("Ford Mondeo", 2009, 5000)
+console.log(civic)
+console.log(mondeo)
 
 /**
  * 2.1.3 constructor using prototype
