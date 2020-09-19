@@ -88,8 +88,24 @@ console.log(mondeo)
 
 /**
  * 2.1.3 constructor using prototype
- * to be continued...
  */
+function CarExtention(model, year, miles) {
+  this.model = model;
+  this.year  = year;
+  this.miles = miles;
+}
+/**
+ * プロトタイプObjの再定義を避けるために、ここではObject.prototypeではなく
+ * Object.prototype.newMethodを使用していることに注意。
+ */
+CarExtention.prototype.toString = function () {
+  return this.model + " has done " + this.miles + "miles.";
+}
+// How to use
+var civicExt = new CarExtention("Honda Civic", 2009, 20000);
+var mondeoExt = new CarExtention("Ford Mondeo", 2010, 5000);
 
+console.log(civicExt.toString);
+console.log(mondeoExt.toString);
 
 })()
