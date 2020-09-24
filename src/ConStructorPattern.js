@@ -105,7 +105,7 @@ CarExtention.prototype.toString = function () {
 var civicExt = new CarExtention("Honda Civic", 2009, 20000);
 var mondeoExt = new CarExtention("Ford Mondeo", 2010, 5000);
 
-console.log(civicExt.toString);
-console.log(mondeoExt.toString);
+console.log(civicExt.toString());
+console.log(mondeoExt.toString());
 
 })()
