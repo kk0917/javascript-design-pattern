@@ -45,3 +45,68 @@ myModule.myMethod3({ // fr
   language: "fr",
   useCaching: false
 });
+
+var testModule =(function() {
+  var counter = 0;
+  return {
+    increment: function() {
+      return ++counter;
+    },
+
+    resetCounter: function() {
+      console.log("counter value prior to reset: " + counter);
+      counter = 0;
+    }
+  }
+})()
+
+var myNamespace = (function() {
+  var myPrivateVar = 0;
+
+  var myPrivateMethod = function() {
+    console.log(foo);
+  };
+
+  return {
+    myPublicVar: "foo",
+    myPublicFunction: function(bar) {
+      myPrivateVar++;
+      myPrivateMethod(bar);
+    }
+  };
+})();
+
+var basketModule = (function() {
+  var basket= [];
+
+  function doSomethingPrivate() {
+    // ...
+  }
+
+  function doSomethingElsePrivate() {
+    // ...
+  }
+
+  return {
+    addItem: function(values) {
+      basket.push(values);
+    },
+
+    getItemCount: function() {
+      return basket.length;
+    },
+
+    doSomething: doSomethingPrivate,
+
+    getTotal: function() {
+      var itemCount = this.getItemCount();
+      var total = 0
+
+      while (itemCount--) {
+        total += basket[itemCount].price
+      }
+
+      return total;
+    }
+  };
+})();
