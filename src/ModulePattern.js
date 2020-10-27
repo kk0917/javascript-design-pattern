@@ -1,3 +1,6 @@
+/**
+ * 2.2.1 Object Literal
+ */
 var myObjectLiteral = {
 
   variableKey: "variableValue",
@@ -35,7 +38,7 @@ var myModule = {
       console.log(this.myConfig.language)
     }
   }
-}
+};
 
 myModule.myMethod(); // Where in the world is Paul Irish today?
 
@@ -46,6 +49,9 @@ myModule.myMethod3({ // fr
   useCaching: false
 });
 
+/**
+ * 2.2.2 Module Pattern
+ */
 var testModule =(function() {
   var counter = 0;
   return {
@@ -58,7 +64,7 @@ var testModule =(function() {
       counter = 0;
     }
   }
-})()
+})();
 
 var myNamespace = (function() {
   var myPrivateVar = 0;
@@ -109,4 +115,47 @@ var basketModule = (function() {
       return total;
     }
   };
+})();
+
+/**
+ * 2.2.3 Module pattern variations
+ */
+// import mixin
+var myModule = (function (jQ, ) {
+  function privateMethod1() {
+    jQ(".container").html("test");
+  }
+
+  function privateMethod2() {
+    console.log(_.min([10, 5, 100, 2, 1000]))
+  }
+
+  return {
+    publicMethod: function() {
+      privateMethod1()
+    };
+  }
+
+  // Import jQuery and Underscore
+}(jQuery, _));
+
+myModule.publicMethod();
+
+// export
+var myModule = (function() {
+  // Module Obj
+  var module = {}
+  privateVariable = "Hello, world";
+
+  function privateMethod() {
+    // ...
+  }
+
+  module.publicProperty = "Foobar";
+  module.publicMethod   = function() {
+    console.log(privateVariable);
+  };
+
+  return module;
+
 })();
