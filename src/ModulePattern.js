@@ -51,6 +51,11 @@ myModule.myMethod3({ // fr
 
 /**
  * 2.2.2 Module Pattern
+ * 
+ * Immediately-Invoked Functions is created by
+ *   (function() { ... })() of this function literal.
+ * 
+ * public access 
  */
 var testModule =(function() {
   var counter = 0;
@@ -133,7 +138,7 @@ var myModule = (function (jQ, ) {
   return {
     publicMethod: function() {
       privateMethod1()
-    };
+    }
   }
 
   // Import jQuery and Underscore
@@ -159,3 +164,19 @@ var myModule = (function() {
   return module;
 
 })();
+
+// implementation by jQuery
+function library(module) {
+  $(function() {
+    if (module.init) {
+      module.init()
+    }
+  })
+}
+var myLibrary = library(function() {
+  return {
+    init: function() {
+      // module implementation
+    }
+  }
+})
