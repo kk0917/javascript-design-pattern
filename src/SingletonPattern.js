@@ -5,7 +5,9 @@ var mySingleton = (function() {
   function init() {
     // Singleton
 
-    // Private members, fields(properties) and methods
+    /** Private members, fields(properties) and methods
+     * @return {string} message to improve this object is private.
+     */
     function privateMethod() {
       console.log("I am private.")
     }
