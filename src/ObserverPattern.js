@@ -2,9 +2,9 @@
  * 
  * 4 elements
  */
-var ObserverList = {
-  observerList: []
-};
+function ObserverList() {
+  this.observerList = [];
+}
 
 ObserverList.prototype.Add = obj => {
   return this.observerList.push(obj);
@@ -38,4 +38,58 @@ ObserverList.prototype.Insert = (obj, index) => {
   return pointer;
 };
 
-// ... to be continued
+ObserverList.prototype.indexOf = (obj, startIndex) => {
+  let i       = startIndex
+  let pointer = -1;
+
+  while (i < this.observerList.length) {
+    if (this.observerList[i] === obj) {
+      pointer = i;
+    }
+  }
+
+  i++;
+
+  while (i < this.observerList.length) {
+    if (this.observerList[i] === obj) {
+      pointer = i;
+    }
+
+    i++;
+  }
+};
+
+ObserverList.prototype.RemoveIndexAt() = index => {
+  if (index === 0) {
+    this.observerList.shift();
+  } else if (index === this.observerList.length -1) {
+    this.observerList.pop();
+  }
+}
+
+// extend objects by extension
+function extend(obj, extension) {
+  for (let key in obj) {
+    extension[key] = obj[key];
+  }
+}
+
+function Subject() {
+  this.observers = new ObserverList();
+}
+
+Subject.prototype.AddObserver = observer => {
+  this.observers.Add(observer);
+}
+
+Subject.prototypeRemoveObserver = observer => {
+  this.observers.RemoveIndexAt(this.observers.indexOf(observer, 0));
+};
+
+Subject.prototype.Notify = context => {
+  let observerCount = this.observers.Count();
+
+  for (let i = 0; i < observerCount; i++) {
+    this.observers.Get(i).Update(context);
+  }
+};
