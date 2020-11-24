@@ -2,6 +2,48 @@
  * 
  * 4 elements
  */
+
+// Refer to DOM elements
+let controlCheckbox = document.getElementById('mainCheckbox');
+let addBtn          = document.getElementById('addNewObserver');
+let container       = document.getElementById('observersContainer');
+
+// Concreate Subject
+
+// extends controle checkbox by Subject Class
+extend(new Subject(), controlCheckbox);
+
+// Notify to Observer when the checkbox clicks
+controlCheckbox.addEventListener('click', () => {
+  new Function('controlCheckbox.Notify(controlCheckbox.checked)')
+}, false);
+
+addBtn.addEventListener('click', () => {
+  AddNewObserber;
+}, false);
+
+// Concreate Observer
+
+function AddNewObserber() {
+  // create adding checkbox
+  let check  = document.createElement('input');
+  check.type = 'checkbox';
+
+  // extends checkboxes by using Obserber Class
+  extend(new ObserverList(), check);
+
+  // override when update motion occures
+  check.Update = () => {
+    this.checked = value;
+  };
+
+  // add new Obserber in Main subject's observer list
+  controlCheckbox.AddObserber(check);
+
+  // add fields to containers
+  container.appendChild(check);
+}
+
 function ObserverList() {
   this.observerList = [];
 }
