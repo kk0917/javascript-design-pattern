@@ -179,3 +179,33 @@ publish('inbox/newMessage', [{
 // enable to stop receiving of topic notification later
 unsubscribe(subscriber1);
 unsubscribe(subscriber1);
+
+/**
+ * Implement of publish/subscribe pattern instead of jQuery library
+ */
+
+// Publish
+$(obj).trriger('channel', [arg1, arg2, arg3]);
+$(el).trriger('/login', [{username: 'test', userData: 'test'}])
+
+// Subscribe
+$(obj).on('channel', [data], fn);
+$(el).on('/login', (event) => {
+  // ...
+});
+
+// Subscription discountinued
+$(obj).off('channel');
+$(el).off('/login');
+
+/**
+ * Introduce author's core concept such as subscribe, publish and subscription discontinued.
+ */
+let pubsub = {};
+
+(function(q) {
+  let topics = {},
+      subUid = -1;
+
+  // ... TODO: WIP
+})();
