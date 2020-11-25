@@ -4,9 +4,9 @@
  */
 
 // Refer to DOM elements
-let controlCheckbox = document.getElementById('mainCheckbox');
-let addBtn          = document.getElementById('addNewObserver');
-let container       = document.getElementById('observersContainer');
+let controlCheckbox = document.getElementById('mainCheckbox'),
+    addBtn          = document.getElementById('addNewObserver'),
+    container       = document.getElementById('observersContainer');
 
 // Concreate Subject
 
@@ -25,7 +25,7 @@ addBtn.addEventListener('click', () => {
 // Concreate Observer
 
 function AddNewObserber() {
-  // create adding checkbox
+  // create adding new checkbox
   let check  = document.createElement('input');
   check.type = 'checkbox';
 
@@ -135,3 +135,47 @@ Subject.prototype.Notify = context => {
     this.observers.Get(i).Update(context);
   }
 };
+
+/**
+ * Diffirence Observer and publish/subscribe Design Pattern
+ */
+// Description how to use publish/subscribe Design Patterns
+
+// Very simply mail processing program
+
+// 受信したメッセージの数
+let mailCounter = 0;
+
+// Initialize subscriber waiting for receive an email named [inbox/newMessage] 
+
+// Show preview of new Message
+let subscriber1 = subscribe('inbox/newMessage', (topic, data) => {
+  // Output log's topic for debugging
+  console.log('A new message was received: ', topic)
+
+  // Show the message preview for user by using the data received from subject
+  document.querySelector('.messageSender').forEach(element => {
+    element.innerHTML = data.sender;
+  });
+  document.querySelector('.messagePreview').forEach(element => {
+    element.innerHTML = data.body;
+  });
+});
+
+// Subscriber executing different task with using same data
+
+// Update counter and show the new messages number received from publisher
+let subscriber2 = subscribe('index/newMessage', (topic, data) => {
+  document.querySelector('.newMessageCounter').forEach(element => {
+    element.innerHTML = mailCounter++;
+  });
+});
+
+publish('inbox/newMessage', [{
+  sender: 'hello@google.com',
+  body: 'Hey there! How are you doing today?'
+}]);
+
+// enable to stop receiving of topic notification later
+unsubscribe(subscriber1);
+unsubscribe(subscriber1);
