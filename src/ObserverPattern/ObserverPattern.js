@@ -101,7 +101,7 @@ ObserverList.prototype.indexOf = (obj, startIndex) => {
   }
 };
 
-ObserverList.prototype.RemoveIndexAt() = index => {
+ObserverList.prototype.RemoveIndexAt = index => {
   if (index === 0) {
     this.observerList.shift();
   } else if (index === this.observerList.length -1) {
@@ -136,49 +136,50 @@ Subject.prototype.Notify = context => {
   }
 };
 
-/**
+/** Pub/Sub Sample. Infeasible(No define -> subscribe(), publish(), unsubscribe())
  * Diffirence Observer and publish/subscribe Design Pattern
- */
+ ******************************************************************************/
 // Description how to use publish/subscribe Design Patterns
 
 // Very simply mail processing program
 
 // 受信したメッセージの数
-let mailCounter = 0;
+// let mailCounter = 0;
 
 // Initialize subscriber waiting for receive an email named [inbox/newMessage] 
 
 // Show preview of new Message
-let subscriber1 = subscribe('inbox/newMessage', (topic, data) => {
-  // Output log's topic for debugging
-  console.log('A new message was received: ', topic)
+// let subscriber1 = subscribe('inbox/newMessage', (topic, data) => {
+//   // Output log's topic for debugging
+//   console.log('A new message was received: ', topic)
 
   // Show the message preview for user by using the data received from subject
-  document.querySelector('.messageSender').forEach(element => {
-    element.innerHTML = data.sender;
-  });
-  document.querySelector('.messagePreview').forEach(element => {
-    element.innerHTML = data.body;
-  });
-});
+//   document.querySelector('.messageSender').forEach(element => {
+//     element.innerHTML = data.sender;
+//   });
+//   document.querySelector('.messagePreview').forEach(element => {
+//     element.innerHTML = data.body;
+//   });
+// });
 
 // Subscriber executing different task with using same data
 
 // Update counter and show the new messages number received from publisher
-let subscriber2 = subscribe('index/newMessage', (topic, data) => {
-  document.querySelector('.newMessageCounter').forEach(element => {
-    element.innerHTML = mailCounter++;
-  });
-});
+// let subscriber2 = subscribe('index/newMessage', (topic, data) => {
+//   document.querySelector('.newMessageCounter').forEach(element => {
+//     element.innerHTML = mailCounter++;
+//   });
+// });
 
-publish('inbox/newMessage', [{
-  sender: 'hello@google.com',
-  body: 'Hey there! How are you doing today?'
-}]);
+// publish('inbox/newMessage', [{
+//   sender: 'hello@google.com',
+//   body: 'Hey there! How are you doing today?'
+// }]);
 
 // enable to stop receiving of topic notification later
-unsubscribe(subscriber1);
-unsubscribe(subscriber1);
+// unsubscribe(subscriber1);
+// unsubscribe(subscriber1);
+/******************************************************************************/
 
 /**
  * Implement of publish/subscribe pattern instead of jQuery library
@@ -190,15 +191,15 @@ $(el).trriger('/login', [{username: 'test', userData: 'test'}])
 
 // Subscribe
 $(obj).on('channel', [data], fn);
-$(el).on('/login', (event) => {
-  // ...
+$(el).on('/login', event => {
+  console.log('...');
 });
 
 // Subscription discountinued
 $(obj).off('channel');
 $(el).off('/login');
 
-/**
+/** Pub/Sub Definition.
  * Introduce author's core concept such as subscribe, publish and subscription discontinued.
  */
 let pubsub = {};
@@ -259,3 +260,37 @@ let pubsub = {};
   };
 
 })(pubsub);
+
+/** Execution of the above Pub/Sub
+ * 
+ */
+// easy message handler
+
+// Output topic and data received from subscriber as message log.
+let messageLogger = (topics, data) => {
+  console.log('Logging: ' + topics + ': ' + data);
+};
+
+/** Subscriber monitor subscribed topics
+ *  and Call callback function(message logger) when new notificationto the topic
+ */
+let subscription = pubsub.subscribe('inbox/newMessage', messageLogger);
+
+// To be responsible for notification to publising's topic or application.
+pubsub.publish('inbox/newMessage', 'hello, world!');
+
+// or
+pubsub.publish('inbox/newMessage', ['test', 'a', 'b', 'c']);
+
+// or
+pubsub.publish('inbox/newMessage', {
+  sender: 'hello@google.com',
+  body: 'Hey again!'
+});
+
+//...
+// pubsub.unsubscribe(subscription);
+
+// ...
+// ...
+pubsub.publish('inbox/newMessage', 'Hello! are you still there?');
