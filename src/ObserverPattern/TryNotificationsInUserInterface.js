@@ -32,4 +32,21 @@ gridUpdate = (topic, data) => {
   }
 };
 
-// TODO: WIP
+  /**
+   * At last, show update to data layor.
+   * If you use the ajax requests,
+   * you can broadcast to the application to use available new data.
+   */
+
+  // Publish the change to gridUpdated topic represented new entry.
+  pubsub.publish('newDataAvailable', {
+    summary: 'Apple made $5 billion',
+    identifier: 'APPL',
+    stockPrice: 570.91
+  });
+
+  pubsub.publish('newDataAvailable', {
+    summary: 'Microsoft made $20 million',
+    identifier: 'MSFT',
+    stockPrice: 30.85
+  });
