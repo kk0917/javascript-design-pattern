@@ -39,3 +39,57 @@ let madiator = (() => {
     }
   };
 })();
+
+// more high-levlel implementation
+
+// hand over the context that assign to Mediator
+(root => {
+  guidGenerator = () => { /*..*/ };
+
+  subscriber = (fn, options, context) => {
+    if (!this instanceof Subscriber) {
+      return new Subscriber(fn, context, options);
+    } else {
+      /**
+       * guidGenerator() is a function that generate GUID.
+       * By this, you can reffer the instance of subscriber's Mediator.
+       * To read more easily , the detail omit.
+       */
+      this.id      = guidGenerator();
+      this.fn      = fn;
+      this.options = options;
+      this.context = null;
+
+    }
+  };
+})();
+
+/**
+ * Let's create the topic model
+ * In JavaScript, you can use a Function obj to combine the protype(Be used by new object)
+ *   and the construct
+ */
+function Topic(namespace) {
+  if (!this instanceof Topic) {
+    return new Topic(namepsace);
+  } else {
+    this.namepsace  = namespace || '';
+    this._callbacks = [];
+    this._topics    = [];
+  }
+}
+
+// Define the Topic's prototype.
+//   That includes adding new subscriber ,refer the exist subscriber
+Topic.prototype = {
+  // Add new subscriber
+  AddSubscriber: (fn, options, context) => {
+    let callback = new Subscriber(fn, options, context);
+
+    this._callbacks.push(callback);
+
+    callback.topic = this;
+
+    return callback;
+  },
+}
