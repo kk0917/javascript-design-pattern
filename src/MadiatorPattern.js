@@ -76,6 +76,7 @@ function Topic(namespace) {
     this.namepsace  = namespace || '';
     this._callbacks = [];
     this._topics    = [];
+    this.stopped    = false;
   }
 }
 
@@ -92,4 +93,85 @@ Topic.prototype = {
 
     return callback;
   },
+
+  stopPropagetion = ()　=> {
+    this.stopped = true;
+  },
+
+  getSubscriber: (indentifier) => {
+    for (let x = 0; x= this.call[x].length; x++) {
+      if (this._callbacks[x].id == indentifier
+          || this._callbacks[x].fn == indentifier) {
+        return this._callbacks[x];
+      }
+    }
+
+    for (let in this._topics) {
+      if (this._topics.hasOwnProperty(z)) {
+        let sub = this._topics[z].getSubscriber(indentifier);
+
+        if (sub !== undefined) return sub;
+      }
+    }
+  },
+
+  addTopic: (topic) => {
+    this._topics[topic] = new Topic((this.namespace ? this.namepsace + ':' : '') + topic)
+  },
+
+  hasTopic: (topic) => {
+    return this._topics.hasOwnProperty(topic);
+  },
+
+  returnTopic: (topic) => {
+    return this._topics[topic];
+  },
+
+  removeSubscriber: (indentifier) => {
+    if (!indentifier) {
+      this._callbacks = [];
+
+      for (const z in this._topics) {
+        if (this._topics.hasOwnProperty(z)) {
+          this._topics[z].removeSubscriber(indentifier);
+        }
+      }
+
+      for (let y = 0; y < this._callbacks.length; y++) {
+        if (this._callbacks[y].fn == identifier
+            || this._callbacks[y].id == identifier) {
+          this._callbacks[y].topic = null;
+          this._callbacks.splice(y, 1);
+          x--; y--;
+        }
+      }
+    }
+  },
+
+  publish: (data) => {
+    for (let y = 0; y < this._callbacks.length; y++) {
+      let callback = this._callbacks[y];
+
+      callback.fn.apply(callback.context, data);
+
+      let l = this._callbacks.length;
+
+      if (l < x) {
+        y--;
+        x = l;
+      }
+    }
+
+    for (const x in this._topics) {
+      if (!this.stopped) {
+        if (this._topics.hasOwnProperty(x)) {
+          this._topics[x].publish(data);
+        }
+      }
+    }
+
+    this.stopped = false;
+  }
+};
+
 }
