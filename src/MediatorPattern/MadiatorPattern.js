@@ -221,5 +221,16 @@ Mediator.prototype = {
     this.getTopic(topicName).removeSubscriber(identifier);
   },
 
-  mediator.publish('inbox:messages:new', [args]);
+  publish: (topicName) => {
+    let args = Array.prototype.slice.call(arguments, 1),
+        topic = this.getTopic(topicName);
+
+    args.push(top);
+
+    this.getTopic(topicName).publish(args);
+  }
 };
+
+root.Mediator       = Mediator;
+Mediator.topic      = Topic;
+Mediator.subscriber = Subscriber;
