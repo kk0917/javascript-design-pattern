@@ -106,7 +106,7 @@ Topic.prototype = {
       }
     }
 
-    for (let in this._topics) {
+    for (let z in this._topics) {
       if (this._topics.hasOwnProperty(z)) {
         let sub = this._topics[z].getSubscriber(indentifier);
 
@@ -174,4 +174,52 @@ Topic.prototype = {
   }
 };
 
-}
+function Mediator() {
+  if (!this instanceof Mediator) {
+    return new Mediator();
+  } else {
+    this._topics = new Topic('');
+  }
+};
+
+Mediator.prototype = {
+  getTopic: (namespace) => {
+    let topic = this._topics,
+        namespaceHierarchy = namespace.split(':');
+
+    if (namespace === '') {
+      return topic;
+    }
+
+    if (namespaceHierarchy.length > 0) {
+      for (let i = 0; i < namespaceHierarchy.length; i++) {
+        if (!topic.hasTopic[namespaceHierarchy[i]]) {
+          topic.addTopic(namespaceHierarchy[i]);
+        }
+        
+        topic = topic.returnTopic(namespaceHierarchy[i]);
+      }
+    }
+
+    return topic;
+  },
+
+  subscribe: (topicName, fn, option, context) => {
+    let option  = option || {},
+        context = context || {},
+        topic   = this.getTopic(topicName),
+        sub     = topic. AddSubscriber(fn, options, context);
+
+    return sub;
+  },
+
+  getSubscriber: (identifier, topic) => {
+    return this.getTopic(topic || '').getSubscriber(identifier);
+  },
+
+  remove: (topicName, identifier) => {
+    this.getTopic(topicName).removeSubscriber(identifier);
+  },
+
+  mediator.publish('inbox:messages:new', [args]);
+};
