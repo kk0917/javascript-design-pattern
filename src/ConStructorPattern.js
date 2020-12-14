@@ -86,10 +86,10 @@
     }
   }
   // How to use
-  let civic  = new Car("Honda Civic", 2009, 20000)
-  let mondeo = new Car("Ford Mondeo", 2009, 5000)
-  console.log(civic)
-  console.log(mondeo)
+  let civic  = new Car("Honda Civic", 2009, 20000);
+  let mondeo = new Car("Ford Mondeo", 2009, 5000);
+  console.log(civic);
+  console.log(mondeo);
 
   /**
    * 2.1.3 constructor using prototype
