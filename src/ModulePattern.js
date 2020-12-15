@@ -1,16 +1,15 @@
 /**
  * 2.2.1 Object Literal
  */
-var myObjectLiteral = {
-
+let myObjectLiteral = {
   variableKey: "variableValue",
 
-  functionKey: function() {
+  functionKey: () => {
     // ...
   }
 }
 
-var myModule = {
+let myModule = {
 
   myProperty: "someValue",
 
@@ -22,20 +21,21 @@ var myModule = {
   },
 
   // very simply method
-  myMethod: function() {
+  myMethod: () => {
     console.log("Where in the world is Paul Irish today?");
   },
 
   // output values based on current settings
-  myMethod2: function() {
+  myMethod2: () => {
     console.log("Caching is:" + (this.myConfig.useCaching) ? "enabled" : "disabled");
   },
 
   // override current settings
-  myMethod3: function(newConfig) {
+  myMethod3: newConfig => {
     if (typeof newConfig === "object") {
       this.myConfig = newConfig;
-      console.log(this.myConfig.language)
+
+      console.log(this.myConfig.language);
     }
   }
 };
@@ -57,61 +57,57 @@ myModule.myMethod3({ // fr
  * 
  * public access 
  */
-var testModule =(function() {
-  var counter = 0;
-  return {
-    increment: function() {
-      return ++counter;
-    },
+let testModule =(() => {
+  let counter = 0;
 
-    resetCounter: function() {
+  return {
+    increment: () => { return ++counter; },
+
+    resetCounter: () => {
       console.log("counter value prior to reset: " + counter);
       counter = 0;
     }
-  }
+  };
 })();
 
-var myNamespace = (function() {
-  var myPrivateVar = 0;
+let myNamespace = (() => {
+  let myPrivateVar = 0;
 
-  var myPrivateMethod = function() {
+  let myPrivateMethod = foo => {
     console.log(foo);
   };
 
   return {
     myPublicVar: "foo",
-    myPublicFunction: function(bar) {
-      myPrivateVar++;
+
+    myPublicFunction: bar => {
+      this.myPrivateVar++;
       myPrivateMethod(bar);
     }
   };
 })();
 
-var basketModule = (function() {
-  var basket= [];
+let basketModule = (() => {
+  let basket= [];
 
-  function doSomethingPrivate() {
+  let doSomethingPrivate = () => {
     // ...
-  }
+  };
 
-  function doSomethingElsePrivate() {
+  let doSomethingElsePrivate = () => {
     // ...
-  }
+  };
 
   return {
-    addItem: function(values) {
-      basket.push(values);
-    },
+    addItem: value => { basket.push(values); },
 
-    getItemCount: function() {
-      return basket.length;
-    },
+    getItemCount: () => { return basket.length; },
 
     doSomething: doSomethingPrivate,
 
-    getTotal: function() {
-      var itemCount = this.getItemCount();
-      var total = 0
+    getTotal: () => {
+      let itemCount = this.getItemCount();
+      let total     = 0;
 
       while (itemCount--) {
         total += basket[itemCount].price
@@ -126,57 +122,54 @@ var basketModule = (function() {
  * 2.2.3 Module pattern variations
  */
 // import mixin
-var myModule = (function (jQ, ) {
-  function privateMethod1() {
-    jQ(".container").html("test");
-  }
+let myModule = (($, _) => { // $ = jQuery, _ = Underscore
+  let privateMethod1 = () => {
+    $(".container").html("test");
+  };
 
-  function privateMethod2() {
+  let privateMethod2 = () => {
     console.log(_.min([10, 5, 100, 2, 1000]))
-  }
+  };
 
   return {
-    publicMethod: function() {
-      privateMethod1()
+    publicMethod: () => {
+      privateMethod1();
     }
-  }
+  };
 
   // Import jQuery and Underscore
-}(jQuery, _));
+})(jQuery, _);
 
 myModule.publicMethod();
 
 // export
-var myModule = (function() {
+let myModule = (() => {
   // Module Obj
-  var module = {}
-  privateVariable = "Hello, world";
+  let module = {};
+  let privateVar = "Hello, world";
 
-  function privateMethod() {
+  let privateMethod = () => {
     // ...
-  }
+  };
 
   module.publicProperty = "Foobar";
-  module.publicMethod   = function() {
+  module.publicMethod   = () => {
     console.log(privateVariable);
   };
 
   return module;
-
 })();
 
 // implementation by jQuery
-function library(module) {
-  $(function() {
-    if (module.init) {
-      module.init()
-    }
+let library = module => {
+  $(() => {
+    if (module.init) { module.init() };
   })
-}
-var myLibrary = library(function() {
+};
+let myLibrary = library(() => {
   return {
-    init: function() {
+    init: () => {
       // module implementation
     }
-  }
-})
+  };
+});
