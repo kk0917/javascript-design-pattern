@@ -143,7 +143,7 @@ Subject.prototype.Notify = context => {
 
 // Very simply mail processing program
 
-// 受信したメッセージの数
+// number of received message
 let mailCounter = 0;
 
 // Initialize subscriber waiting for receive an email named [inbox/newMessage] 
