@@ -2,8 +2,9 @@
  * 2.3 Revealing Module Pattern
  */
 // example
-var myRevealingModule = (function() {
-  let [privateVar, publicVar] = ["Ben Cherry", "Hey there!"];
+let myRevealingModule = (() => {
+  let privateVar = "Ben Cherry",
+      publicVar  = "Hey there!";
 
   function privateFunction() {
     console.log("Name:" + privateVar);
@@ -25,11 +26,14 @@ var myRevealingModule = (function() {
     getName:  publicGetName
   };
 })();
-myRevealingModule.setName("Paul Kinlan")
+myRevealingModule.setName("Paul Kinlan");
 
-// Be able to publish private function or property with unique naming system to externals.
-var myRevealingModule = function () {
-  var privateCounter = 0;
+/**
+ * Be able to publish private function or property
+ *   with unique naming system to externals.
+ */
+let myRevealingModule2 = (() => {
+  let privateCounter = 0;
 
   function privateFunction() {
     privateCounter++;
@@ -37,6 +41,10 @@ var myRevealingModule = function () {
 
   function publicFunction() {
     publicIncrement();
+  }
+
+  function publicIncrement () {
+    privateFunction();
   }
 
   function publicGetCount() {
@@ -50,4 +58,4 @@ var myRevealingModule = function () {
     increment: publicIncrement,
     count:     publicGetCount
   }
-}
+})();

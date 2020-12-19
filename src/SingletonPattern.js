@@ -1,6 +1,6 @@
-var mySingleton = (function() {
+let mySingleton = (() => {
   // save references to singleton.
-  var instance;
+  let instance;
 
   function init() {
     // Singleton
@@ -12,11 +12,11 @@ var mySingleton = (function() {
       console.log("I am private.")
     }
 
-    var privateVar = "I am also private";
+    let privateVar = "I am also private";
 
     return {
       // Public members, fields(properties) and methods
-      publicMethod: function() {
+      publicMethod: () => {
         console.log("The public can see me!");
       },
 
@@ -37,25 +37,25 @@ var mySingleton = (function() {
       return instance;
     }
   };
-})()
+})();
 
 // How to use
-var singleA = mySingleton;
-var singleB = mySingleton;
+let singleA = mySingleton;
+let singleB = mySingleton;
 
 console.log(singleA === singleB); // output: true
 
 /** Difference between class and singleton
  * 
  * Singleton: 
- *   implements a static instance, but it created lazy . So it doesn't memory's assets.
+ *   implements a static instance, but it created lazy. So it doesn't memory's assets.
  * 
  * Static Instance:
  *   When using static Objects that can be initialized directly, 
  *   it must be guaranteed to execute codes Always run in the same order.
  *   And it can't scale up that there are source codes in large amounts.
  */
-mySingleton.getInstance = function() {
+mySingleton.getInstance = () => {
   if (this._instance == null) {
     if (isFoo()) {
       this._instance = new FooSingleton(); // this instance is sub class of BasicSingleton
@@ -65,37 +65,39 @@ mySingleton.getInstance = function() {
   }
 
   return this._instance;
-}
+};
 
 /**
  * Singleton pattern is useful where objects working with other objects Everywhere in the system.
  */
-var SingletonTester = (function () {
-  // options are objects including setting options of it.
-  // ex. var options = { name: "test", pointX: 5 };
+let SingletonTester = (() => {
+  /**
+   * options are objects including setting options of it.
+   * ex. let options = { name: "test", pointX: 5 };
+   */
   function Singleton(options) {
     /**
-     * if there are options received by argument, set them this singleton's properties.
+     * if there are options received by argument, set them this Singleton's properties.
      * if not, set object that all properties are empty.
      */
     options = options || {};
 
-    // set singleton's properties
+    // set Singleton's properties
     this.name   = "SingletonTester";
     this.pointX = options.pointX || 6;
     this.pointY = options.pointY || 10;
-  }
+  };
 
   // storad place of instance
-  var instance;
+  let instance;
 
   // enumerate all static members
-  var _static = {
+  let _static = {
     name: "SingletonTester",
 
     // methods getting instances
-    // return instance of singleton object
-    getInstance: function (options) {
+    // return instance of Singleton object
+    getInstance: (options) => {
       if (instance === undefined) instance = new Singleton(options);
 
       return instance;
@@ -105,9 +107,9 @@ var SingletonTester = (function () {
   return _static;
 })();
 
-var singletonTest = SingletonTester.getInstance({
+let singletonTest = SingletonTester.getInstance({
   pointX: 5
-})
+});
 
 // Output logs to confirm whether if pointX's value is right or not.
-console.log(singletonTest.pointX) // output: 5
+console.log(singletonTest.pointX); // output: 5

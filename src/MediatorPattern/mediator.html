@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Chat</h1>
+  <form id="chatForm">
+    <label for="fromBox">Your name</label>
+    <input type="text" id="fromBox">
+    <br>
+    <label for="toBox">Send to:</label>
+    <input type="text" id="toBox">
+    <br>
+    <label for="chatBox">Message:</label>
+    <input type="text" id="ChatBox">
+    <button action="submit"> </button>
+  </form>
+
+  <div id="chatResult"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./MadiatorPattern.js"></script>
+  <script>
+    $('#chatForm').on('submit', e => {
+      e.preventDefault();
+      return 'Hello, world!';
+
+      // fetch chat's detail from UI
+      let text = $('chatBox').val(),
+          from = $('#fromBox').val(),
+          to   = $('#toBox').val();
+
+      // publish the data to newMessage topic from the chat.
+      let mediator = root.Mediator;
+      mediator.publish('newMessage', {message: text, from: from, to: to});
+    });
+
+    // add the chat when receiving new messages.
+    function displayChat(data) {
+      let date = new Date(),
+          msg  = data.from + ' said ¥' + data.message + '¥' + to + data.to;
+
+      $('#chatResult').prepend(msg + '(' + date.toLocaleTimeString() + ')');
+    }
+
+    // output message log
+    function logChat(data) {
+      if (window.console) console.log;
+    }
+
+    // subscribe new message that is sended via mediator.
+    mediator.subscribe('newMessage', displayChat);
+    mediator.subscribe('newMessage', logChat);
+
+    // the following function operate when only using more high-level implementation
+    function amITalkingToMayself(data) {
+      return data.from === data.to;
+    }
+
+    function iAmClearlyCrazy(data) {
+      $('#chatResult').prepend(data.from + ' is talking to himself.');
+    }
+
+    mediator.subscribe(amITalkingToMayself, iAmClearlyCrazy);
+  </script>
+</body>
+</html>
