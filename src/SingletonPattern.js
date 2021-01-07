@@ -1,18 +1,18 @@
-let mySingleton = (() => {
+const mySingleton = (() => {
   // save references to singleton.
   let instance;
 
-  function init() {
+  const init = () => {
     // Singleton
 
     /** Private members, fields(properties) and methods
      * @return {string} message to improve this object is private.
      */
-    function privateMethod() {
-      console.log("I am private.")
+    const privateMethod = () => {
+      console.log("I am private.");
     }
 
-    let privateVar = "I am also private";
+    const privateVar = "I am also private";
 
     return {
       // Public members, fields(properties) and methods
@@ -29,7 +29,7 @@ let mySingleton = (() => {
      * Fetch a singleton instance if the instance is exists,
      * create the instance if it's not exists.
      */
-    getInstance: function () {
+    getInstance: () => {
       if (!instance) {
         instance = init();
       }
@@ -40,8 +40,8 @@ let mySingleton = (() => {
 })();
 
 // How to use
-let singleA = mySingleton;
-let singleB = mySingleton;
+const singleA = mySingleton;
+const singleB = mySingleton;
 
 console.log(singleA === singleB); // output: true
 
@@ -70,12 +70,12 @@ mySingleton.getInstance = () => {
 /**
  * Singleton pattern is useful where objects working with other objects Everywhere in the system.
  */
-let SingletonTester = (() => {
+const SingletonTester = (() => {
   /**
    * options are objects including setting options of it.
    * ex. let options = { name: "test", pointX: 5 };
    */
-  function Singleton(options) {
+  const Singleton = options => {
     /**
      * if there are options received by argument, set them this Singleton's properties.
      * if not, set object that all properties are empty.
