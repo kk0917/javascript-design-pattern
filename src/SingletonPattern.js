@@ -98,7 +98,12 @@ const SingletonTester = (() => {
     // methods getting instances
     // return instance of Singleton object
     getInstance: (options) => {
-      if (instance === undefined) instance = new Singleton(options);
+      if (instance === undefined) instance = Singleton(options);
+      /** Warning!
+       * 
+       * Class methods and arrow functions must not be invoked using new,
+       *   and attempting to do so will result in a runtime error.
+       */
 
       return instance;
     }
