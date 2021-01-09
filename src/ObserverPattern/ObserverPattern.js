@@ -1,7 +1,37 @@
 /** Observer Design Pattern
  * 
- * 4 elements
+ * Observer pattern has object's(Observer) list named Subject
+ *   that depends on the object itself,
+ *   and the Subject notices the Observer automatically when changing statement.
  */
+/** Learn about the details Observer Pattern used the following components.
+ * 
+ * Subject:
+ *   It has the Observer's list, adding and  deleting of observers easily.
+ * 
+ * Observer:
+ *   It provides the updating interface for receiving the notifications
+ *     about the subject's changing statement.
+ * 
+ * Concreate Subject:
+ *   It sends the notifications to the all several Observers at once when the statement changes.
+ * 
+ * Concreate Observer:
+ *   It has the reference to ConcreateSubject,
+ *      and for guarantee the Subject and the statement are match,
+ *      implement the updating interface of Observer.
+ */
+
+// At first, trying to express the Observer's list of the Subject has by using the following codes.
+const ObserverList = () => this.observerList = [];
+
+ObserverList.prototype.Add = obj => { return this.observerList.push(obj) };
+
+ObserverList.prototype.Empty = () => this.observerList = [];
+
+ObserverList.prototype.Count = () => { return this.observerList.length };
+
+
 
 // Refer to DOM elements
 let controlCheckbox = document.getElementById('mainCheckbox'),
@@ -29,7 +59,7 @@ function AddNewObserber() {
   let check  = document.createElement('input');
   check.type = 'checkbox';
 
-  // extends checkboxes by using Obserber Class
+  // extends checkboxes by using observer Class
   extend(new ObserverList(), check);
 
   // override when update motion occures
@@ -37,7 +67,7 @@ function AddNewObserber() {
     this.checked = value;
   };
 
-  // add new Obserber in Main subject's observer list
+  // add new observer in Main subject's observer list
   controlCheckbox.AddObserber(check);
 
   // add fields to containers
