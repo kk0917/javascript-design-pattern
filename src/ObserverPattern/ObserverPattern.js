@@ -1,8 +1,113 @@
 /** Observer Design Pattern
  * 
- * 4 elements
+ * Observer pattern has object's(Observer) list named Subject
+ *   that depends on the object itself,
+ *   and the Subject notices the Observer automatically when changing statement.
+ */
+/** Learn about the details Observer Pattern used the following components.
+ * 
+ * Subject:
+ *   It has the Observer's list, adding and  deleting of observers easily.
+ * 
+ * Observer:
+ *   It provides the updating interface for receiving the notifications
+ *     about the subject's changing statement.
+ * 
+ * Concreate Subject:
+ *   It sends the notifications to the all several Observers at once when the statement changes.
+ * 
+ * Concreate Observer:
+ *   It has the reference to ConcreateSubject,
+ *      and for guarantee the Subject and the statement are match,
+ *      implement the updating interface of Observer.
  */
 
+// At first, trying to express the Observer's list of the Subject has by using the following codes.
+const ObserverList = () => this.observerList = [];
+
+ObserverList.prototype.Add = obj => { return this.observerList.push(obj) };
+
+ObserverList.prototype.Empty = () => this.observerList = [];
+
+ObserverList.prototype.Count = () => { return this.observerList.length };
+
+ObserverList.prototype.Get = index => {
+  if (index > -1 && index < this.observerList.length) { return this.observerList[index]; }
+}
+
+ObserverList.prototype.Insert = (obj, index) => {
+  let pointer = -1;
+
+  if (index === 0) {
+    this.observerList.unshift(obj);
+    pointer = index;
+  } else if(index === this.observerList.length) {
+    this.observerList.push(obj);
+    pointer = index;
+  }
+
+  return pointer;
+}
+
+ObserverList.prototype.indexOf = (obj, startIndex) => {
+  let i = startIndex,
+      pointer = -1;
+
+  while (i < this.observerList.length) {
+    if (this.observerList[i] === obj) {
+      pointer = i;
+    }
+
+    i++;
+  }
+
+  return pointer;
+};
+
+ObserverList.prototype.RemoveIndexAt() = index => {
+  if (index === 0) {
+    this.observerList.shift()
+  } else if(index === this.observerList -1) {
+    this.observerList.pop
+  }
+};
+
+const extend = (obj, extension) => {
+  for (let key in obj) extension[key] = obj[key];
+}
+
+const Subject = () => {
+  this.observers.Add
+};
+
+Subject.prototype.AddObserver = observer => {
+  this.observers.Add(observer);
+}
+
+Subject.prototypeRemoveObserver = observer => {
+  this.observers.RemoveIndexAt(this.observers.indexOf(observer, 0));
+};
+
+Subject.prototype.Notify = context => {
+  let observerCount = this.observers.Count();
+
+  for (let i = 0; i < observerCount; i++) {
+    this.observers.Get(i).Update(context);
+  }
+};
+
+// Observer
+const Observer = () => {
+  this.Update = () => { // will be overridden after.
+    // ...
+  };
+};
+
+/** Sample Application
+ *
+ * Definition:
+ * - Button that add the checkbox of Observation target to the page.
+ */
 // Refer to DOM elements
 let controlCheckbox = document.getElementById('mainCheckbox'),
     addBtn          = document.getElementById('addNewObserver'),
@@ -29,7 +134,7 @@ function AddNewObserber() {
   let check  = document.createElement('input');
   check.type = 'checkbox';
 
-  // extends checkboxes by using Obserber Class
+  // extends checkboxes by using observer Class
   extend(new ObserverList(), check);
 
   // override when update motion occures
@@ -37,104 +142,12 @@ function AddNewObserber() {
     this.checked = value;
   };
 
-  // add new Obserber in Main subject's observer list
+  // add new observer in Main subject's observer list
   controlCheckbox.AddObserber(check);
 
   // add fields to containers
   container.appendChild(check);
 }
-
-function ObserverList() {
-  this.observerList = [];
-}
-
-ObserverList.prototype.Add = obj => {
-  return this.observerList.push(obj);
-};
-
-ObserverList.prototype.Empty = () => {
-  this.observerList = [];
-};
-
-ObserverList.prototype.Count = () => {
-  return this.observerList.length;
-};
-
-ObserverList.prototype.Get = index => {
-  if (index > -1 && index < this.observerList.length) {
-    return this.observerList[index];
-  }
-};
-
-ObserverList.prototype.Insert = (obj, index) => {
-  var pointer = -1;
-
-  if (index === 0) {
-    this.observerList.unshift(obj);
-    pointer = index;
-  } else if (index === this.observerList.length) {
-    this.observerList.push(obj);
-    pointer = index;
-  }
-
-  return pointer;
-};
-
-ObserverList.prototype.indexOf = (obj, startIndex) => {
-  let i       = startIndex
-  let pointer = -1;
-
-  while (i < this.observerList.length) {
-    if (this.observerList[i] === obj) {
-      pointer = i;
-    }
-  }
-
-  i++;
-
-  while (i < this.observerList.length) {
-    if (this.observerList[i] === obj) {
-      pointer = i;
-    }
-
-    i++;
-  }
-};
-
-ObserverList.prototype.RemoveIndexAt = index => {
-  if (index === 0) {
-    this.observerList.shift();
-  } else if (index === this.observerList.length -1) {
-    this.observerList.pop();
-  }
-}
-
-// extend objects by extension
-function extend(obj, extension) {
-  for (let key in obj) {
-    extension[key] = obj[key];
-  }
-}
-
-function Subject() {
-  this.observers = new ObserverList();
-}
-
-Subject.prototype.AddObserver = observer => {
-  this.observers.Add(observer);
-}
-
-Subject.prototypeRemoveObserver = observer => {
-  this.observers.RemoveIndexAt(this.observers.indexOf(observer, 0));
-};
-
-Subject.prototype.Notify = context => {
-  let observerCount = this.observers.Count();
-
-  for (let i = 0; i < observerCount; i++) {
-    this.observers.Get(i).Update(context);
-  }
-};
 
 /** Pub/Sub Sample. Infeasible(No define -> subscribe(), publish(), unsubscribe())
  * Diffirence Observer and publish/subscribe Design Pattern
@@ -143,7 +156,7 @@ Subject.prototype.Notify = context => {
 
 // Very simply mail processing program
 
-// 受信したメッセージの数
+// number of received message
 let mailCounter = 0;
 
 // Initialize subscriber waiting for receive an email named [inbox/newMessage] 
