@@ -7,7 +7,16 @@ let madiator = (() => {
    */
 
   // Storage area to the topics broadcasted or listing.
-  let subscribe = (topic, fn) => {
+  let topics = {};
+
+  /** subscribe function
+   * 
+   * @param {Array<string>} topic 
+   * @param {any}           fn
+   * 
+   * @returns {}
+   */
+  const subscribe = (topic: Array<string>, fn: any) => {
     if (!topics[topic]) topics[topic] = [];
 
     topics[topic].push({context: this, callback: fn});
