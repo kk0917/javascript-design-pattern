@@ -1,4 +1,4 @@
-let madiator = (() => {
+const madiator = (() => {
   /**
    * Mediator Design Pattern is like an airport's control system.
    * Control tower(Mediator) controls which airplane can takeoff and landing.
@@ -7,7 +7,16 @@ let madiator = (() => {
    */
 
   // Storage area to the topics broadcasted or listing.
-  let subscribe = (topic, fn) => {
+  let topics = {};
+
+  /** subscribe function
+   * 
+   * @param {string|number} topic 
+   * @param {any}           fn
+   * 
+   * @returns {}
+   */
+  const subscribe = (topic: string|number, fn: any) => {
     if (!topics[topic]) topics[topic] = [];
 
     topics[topic].push({context: this, callback: fn});
@@ -15,24 +24,30 @@ let madiator = (() => {
     return this;
   };
 
-  // Publish/Broadcast events to the Application.
-  let publish = (topic) => {
-    let args;
+  /** Publish/Broadcast events to the Application.
+   * 
+   * @param {string|number} topic
+   * 
+   * @returns {object}
+   */
+  const publish = (topic: string|number) => {
+    let args: any;
+    let arguments: any;
 
     if (!topics[topic]) return false;
 
-    args = Array.prototype.slice.call(arguments, 1);
+    args = Array.prototype.slice.call (arguments, 1);
 
-    for (let i = 0; i < topics[topic].length; i++) {
-      let subscription = topics[topic][i];
-      
+    for (const i in topics[topic]) {
+      const subscription: Array<string|number> = topics[topic][i];
+
       subscription.callback.apply(subscription.context, args);
     }
 
     return {
       Publish:      publish,
-      subscription: subscribe,
-      installTo:    (obj) => {
+      Subscription: subscribe,
+      installTo:    obj => {
         obj.subscribe = subscribe;
         obj.publish   = publish;
       }
@@ -44,11 +59,18 @@ let madiator = (() => {
 
 // hand over the context that assign to Mediator
 (root => {
-  guidGenerator = () => { /*..*/ };
+  const guidGenerator = () => '/*..*/';
 
-  subscriber = (fn, options, context) => {
+  /** subscribe
+   * 
+   * @param {object} fn
+   * @param {object} options
+   * @param {any}    context
+   */
+  const Subscriber = (fn: object, options: object, context: any): void => {
     if (!this instanceof Subscriber) {
       return new Subscriber(fn, context, options);
+
     } else {
       /**
        * guidGenerator() is a function that generate GUID.
@@ -59,19 +81,21 @@ let madiator = (() => {
       this.fn      = fn;
       this.options = options;
       this.context = null;
-
     }
   };
 })();
 
-/**
- * Let's create the topic model
- * In JavaScript, you can use a Function obj to combine the protype(Be used by new object)
- *   and the construct
+/** Let's create the topic model
+ * 
+ * In JavaScript, you can use a Function obj to combine the protype
+ *   (Be used by new object) and the construct
+ * @param {string} namespace 
+ * @returns {object}
  */
-function Topic(namespace) {
+const Topic = (namespace: string) => {
   if (!this instanceof Topic) {
-    return new Topic(namepsace);
+    return new Topic(namespace);
+
   } else {
     this.namepsace  = namespace || '';
     this._callbacks = [];
