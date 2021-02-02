@@ -1,20 +1,22 @@
+import { AddPropsType, KeyIF, Car, CarExtention } from "./Model";
+
 (function() {
 
   // pattern of create object
-  // const newObject1 = {}; JS literal
-  // const newObject2 = new Object(); JS literal
+  const newObject1: AddPropsType['obj'] = new Object();
+  const newObject2 = new Object();
   const newObject3 = {};
   const newObject4 = new Object();
 
   // how to assign keys and values to object
 
   // . syntax - JS literal
-  // newObject1.someKey = "Hello, world";
-  // const key = newObject1.someKey;
+  newObject1.prototype.someKey = "Hello, world";
+  const _someKeu = newObject1.someKey;
 
   // [] syntax - JS literal
-  // newObject2["someKey"] = "Hello, world";
-  // const key = newObject2["someKey"];
+  newObject2["someKey"] = "Hello, world";
+  const key = newObject2["someKey"];
 
   /**
    * Compliant only ECMAScript5
@@ -22,12 +24,6 @@
    */
 
   // Object.defineProperty
-  interface KeyIF {
-    value: string;
-    writable?: boolean;
-    enumerable?: boolean;
-    configurable?: boolean;
-  }
   const SomeKey: KeyIF = {
     value: "for more control of the property's behavior",
     writable: true,
@@ -77,15 +73,6 @@
    * new object already has default member,
    * these can use by using "this" keyword
    */
-  function Car(model, year, miles) {
-    this.model = model;
-    this.year  = year;
-    this.miles = miles;
-
-    this.toString = function() {
-      return this.model + " has done " + this.miles + "miles";
-    }
-  }
   // How to use
   const civic  = new Car("Honda Civic", 2009, 20000)
   const mondeo = new Car("Ford Mondeo", 2009, 5000)
@@ -94,17 +81,10 @@
 
   /**
    * 2.1.3 constructor using prototype
-   */
-  function CarExtention(model, year, miles) {
-    this.model = model;
-    this.year  = year;
-    this.miles = miles;
-  }
-  /**
    * プロトタイプObjの再定義を避けるために、ここではObject.prototypeではなく
    * Object.prototype.newMethodを使用していることに注意。
    */
-  CarExtention.prototype.toString = function () {
+  CarExtention.prototype.toString =  () => {
     return this.model + " has done " + this.miles + "miles.";
   }
   // How to use
