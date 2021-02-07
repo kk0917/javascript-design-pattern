@@ -28,9 +28,15 @@ class MY_GLOBAL {
   };
 
   nextId = (): number => {
-    this.id += 1;
+    this.id += 
     return this.id;
   }
+};
+
+
+interface model {
+  value: String;
+  enumerable: Boolean;
 };
 
 class vehicle {
@@ -53,9 +59,8 @@ const car = Object.create(vehicle, {
     enumerable: true
   },
 
-  model: {
+  model: model = {
     value: 'Ford',
-
     enumerable: true
   }
 
