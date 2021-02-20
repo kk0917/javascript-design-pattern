@@ -1,18 +1,13 @@
-constMyEvent = (el: HTMLElement, ev: string, fn) => {
-
-  swk
-  if (el.addEventListener) {
-    el.addEventListener(ev, fn, false);
-  } else if(el.attachEvent) {
-    el.attachEvent(``)
+const　MyEvent = (
+  elem: HTMLElement,
+  type: 'click',
+  listener: (this: HTMLElement, type: MouseEvent) => any
+) => {
+  if (elem.addEventListener) {
+    elem.addEventListener(type, listener, false);
+  // } else if(elem.attachEvent) { // for IE
+  //   elem.attachEvent(`on${type}`, fn);
+  } else {
+    elem[`on${type}`] = listener;
   }
 }
-
-// CommandType-related
-image1!.addEventListener(
-  'change',
-  {handleEvent: (event: HTMLElementEvent<HTMLInputElement>) => {
-    this.handleInputChange(event.target.files![0]);
-  }},
-  false,
-);
