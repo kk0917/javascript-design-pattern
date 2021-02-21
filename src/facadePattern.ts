@@ -11,3 +11,45 @@ const　MyEvent = (
     elem[`on${type}`] = listener;
   }
 }
+// of jQuery example
+/**
+bindReady: () => {
+  // ...
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', DOMContentLoaded, false);
+
+    window.addEventListener('load', jQuery.ready, false);
+  } else {
+    
+  }
+}
+*/
+const module = (() => {
+  const _private = {
+    i: 5,
+    get: () => {
+      console.log(`current value: ${this.i}`);
+    },
+    set: val => {
+      this.i = val
+    },
+    run: () => {
+      console.log('running');
+    },
+    jump: () => {
+      console.log('jumping');
+    }
+  };
+
+  return {
+    facade: args => {
+      _private.set(args.val);
+      _private.get();
+      if (args.run) {
+        _private.run();
+      }
+    }
+  };
+})();
+
+module.facade({ run: true, val: 10 })
