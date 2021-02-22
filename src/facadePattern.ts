@@ -42,7 +42,7 @@ const module = (() => {
   };
 
   return {
-    facade: args => {
+    facade: (args: any) => {
       _private.set(args.val);
       _private.get();
       if (args.run) {
