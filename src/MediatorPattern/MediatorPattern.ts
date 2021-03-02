@@ -11,10 +11,8 @@ const madiator = (() => {
 
   /** subscribe function
    * 
-   * @param {string|number} topic 
-   * @param {any}           fn
-   * 
-   * @returns {}
+   * @param   {string|number} topic
+   * @param   {any}           fn
    */
   const subscribe = (topic: string|number, fn: any) => {
     if (!topics[topic]) topics[topic] = [];
@@ -28,9 +26,9 @@ const madiator = (() => {
    * 
    * @param {string|number} topic
    * 
-   * @returns {object}
+   * @returns {object|boolean}
    */
-  const publish = (topic: string|number) => {
+  const publish = (topic: string|number): object|boolean => {
     let args: any;
     let arguments: any;
 
@@ -39,7 +37,7 @@ const madiator = (() => {
     args = Array.prototype.slice.call (arguments, 1);
 
     for (const i in topics[topic]) {
-      const subscription: Array<string|number> = topics[topic][i];
+      const subscription: object = topics[topic][i];
 
       subscription.callback.apply(subscription.context, args);
     }
@@ -68,7 +66,7 @@ const madiator = (() => {
    * @param {any}    context
    */
   const Subscriber = (fn: object, options: object, context: any): void => {
-    if (!this instanceof Subscriber) {
+    if (!this[] instanceof Subscriber) {
       return new Subscriber(fn, context, options);
 
     } else {
