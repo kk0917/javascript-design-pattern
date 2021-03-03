@@ -1,6 +1,6 @@
-import { AddPropsType, KeyIF, Car, CarExtention } from "./Model";
+import { AddPropsType, KeyIF, Car, CarExtension } from "./Model";
 
-(function() {
+(() => {
 
   // pattern of create object
   const newObject1: AddPropsType['obj'] = new Object();
@@ -10,9 +10,9 @@ import { AddPropsType, KeyIF, Car, CarExtention } from "./Model";
 
   // how to assign keys and values to object
 
-  // . syntax - JS literal
-  newObject1.prototype.someKey = "Hello, world";
-  const _someKeu = newObject1.someKey;
+  // . syntax - JS literal, prototype base
+  // newObject1.prototype.someKey = "Hello, world";
+  // const _someKeu = newObject1.someKey;
 
   // [] syntax - JS literal
   newObject2["someKey"] = "Hello, world";
@@ -84,12 +84,12 @@ import { AddPropsType, KeyIF, Car, CarExtention } from "./Model";
    * プロトタイプObjの再定義を避けるために、ここではObject.prototypeではなく
    * Object.prototype.newMethodを使用していることに注意。
    */
-  CarExtention.prototype.toString =  () => {
+  CarExtension.prototype.toString = () => {
     return this.model + " has done " + this.miles + "miles.";
   }
   // How to use
-  const civicExt = new CarExtention("Honda Civic", 2009, 20000);
-  const mondeoExt = new CarExtention("Ford Mondeo", 2010, 5000);
+  const civicExt = new CarExtension("Honda Civic", 2009, 20000);
+  const mondeoExt = new CarExtension("Ford Mondeo", 2010, 5000);
 
   console.log(civicExt.toString());
   console.log(mondeoExt.toString());
