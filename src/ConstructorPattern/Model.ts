@@ -31,14 +31,14 @@ export class Car implements CarIF {
   }
 }
 
-export class CarExtention implements CarIF {
+export class CarExtension implements CarIF {
   model: string;
   year:  number;
   miles: number;
 
-  constructor(_model: string, _year: number, _miles: number) {
-    this.model = _model;
-    this.year  = _year;
-    this.miles = _miles;
+  constructor(model: string, year: number, miles: number) {
+    this.model = model;
+    this.year  = year;
+    this.miles = miles;
   }
 }
