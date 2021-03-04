@@ -57,7 +57,7 @@ import { AddPropsType, KeyIF, Car, CarExtension } from "./Model";
   });
 
   /** How to use these Object as inheritance
-   * 0. use avobe "person" object
+   * 0. use above "person" object
    * 1. create inheritance object
    * 2. set properties
    * 3. get inheritance property
