@@ -1,0 +1,14 @@
+{
+  "name": "javascript-design-patterns",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/kk0917/javascript-design-pattern.git",
+  "author": "@kame_greenergy",
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "4.16.1",
+    "@typescript-eslint/parser": "4.16.1",
+    "eslint": "7.21.0"
+  }
+}
